@@ -1,0 +1,86 @@
+﻿
+<h1>@ViewData["Title"]</h1>
+
+<form>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-4"> </div>
+            <div class="col-sm-4">
+                <center>
+                    <label> <strong>Registrar Persona</strong></label>
+                </center>
+                <br>
+                <div class="form-group">
+                    <label for="nombre">Cedula</label>
+                    <input type="text" class="form-control" id="cedula" name="cedula">
+                </div>
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre">
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido">
+                </div>
+                <div class="form-group">
+                    <label for="nacimiento">Nacimiento</label>
+                    <input type="datetime-local" id="fechaNacimiento"
+                           name="fechaNacimiento" value="2018-06-12T19:30"
+                           min="2018-06-07T00:00" max="2018-06-14T00:00">
+                </div>
+                <div class="form-group">
+                    <label for="sexo">Sexo</label>
+                    <input type="text" class="form-control" id="sexo" name="sexo">
+                </div>
+                <center>
+                    <div class="form-group">
+                        <input id="btnEnviar" type="button" class="btn btn-outline-success" value="Registrar" />
+                    </div>
+                    </center>
+</div>
+                <div class="col-sm-4"> </div>
+            </div>
+
+        </div>
+
+    <p>
+        <a asp-action="listarPersona">back</a>
+    </p>
+
+</form>
+
+@section scripts {
+    <script>
+        $("#btnEnviar").click(function () {
+            alert("hola estoy en registrar");
+            var persona = {
+                'Cedula': $('#cedula').val(),
+                'Nombre': $('#nombre').val(),
+                'Apellido': $('#apellido').val(),
+                'FechaNacimiento': $('#fechaNacimiento').val(),
+                'Sexo': $('#sexo').val()
+            };
+       
+          
+            $.ajax({
+                url: "@Url.Action("registrarPersona", "Home")",
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(persona),
+                success: function (response) {
+
+                    if (response) {
+                        alert('La persona fue registrado exitosamente.');
+                    } else {
+                        alert('La persona ya ha sido registrado anteriormente.');
+                    }
+
+
+                },
+                error: function (error) {
+                }
+            });
+        });
+    </script>
+}
